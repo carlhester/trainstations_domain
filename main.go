@@ -10,7 +10,7 @@ func main() {
 	var stationRepository stations.Repository
 
 	// Set our repository to use the in-memory storage
-	stationRepository = memory.NewMemoryStationStorage()
+	stationRepository = storage.NewMemoryStationStorage()
 
 	// Use the GetAllStations functionality to populate stations
 	stations, _ := stationRepository.GetAllStations()

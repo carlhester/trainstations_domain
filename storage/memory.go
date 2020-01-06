@@ -1,4 +1,4 @@
-package memory
+package storage
 
 import "trainstations_domain/stations"
 
@@ -23,8 +23,8 @@ func (m *MemoryStationStorage) Add(station stations.Station) error {
 	return nil
 }
 
-func GetStationByAbbr(abbr string) (stations.Station, error) {
-	_ = abbr
-	Station := stations.Station{Abbr: "MONT", Name: "Montgomery"}
-	return Station, nil
+func (m *MemoryStationStorage) GetStationByAbbr(abbr string) (stations.Station, error) {
+	StationInMemory := stations.Station{Abbr: "MONT", Name: "Montgomery"}
+	queriedStation := StationInMemory
+	return queriedStation, nil
 }
