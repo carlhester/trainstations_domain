@@ -24,7 +24,7 @@ func (m *MemoryStationStorage) Add(station stations.Station) error {
 }
 
 func (m *MemoryStationStorage) GetStationByAbbr(abbr string) (stations.Station, error) {
-	StationInMemory := stations.Station{Abbr: "MONT", Name: "Montgomery"}
-	queriedStation := StationInMemory
+	stationInMemory := stations.Station{Abbr: "MONT", Name: "Montgomery"}
+	queriedStation := stationInMemory
 	return queriedStation, nil
 }
