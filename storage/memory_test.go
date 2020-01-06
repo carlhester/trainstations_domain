@@ -3,8 +3,6 @@ package storage
 import "trainstations_domain/stations"
 import "testing"
 
-import "fmt"
-
 func TestGetAllStations(t *testing.T) {
 	stationRepository := NewMemoryStationStorage()
 
@@ -24,5 +22,15 @@ func TestGetStationByAbbr(t *testing.T) {
 
 	if have != want {
 		t.Error(have, want)
+	}
+}
+
+func TestGetStationByAbbrFailLookup(t *testing.T) {
+	stationRepository := NewMemoryStationStorage()
+
+	have, err := stationRepository.GetStationByAbbr("")
+
+	if err == nil {
+		t.Error(have, err)
 	}
 }
