@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 import "trainstations_domain/stations"
-import "trainstations_domain/storage/memory"
+import "trainstations_domain/storage"
 
 func main() {
 
