@@ -21,16 +21,24 @@ func TestGetStationByAbbr(t *testing.T) {
 	want := stations.Station{Abbr: "MONT", Name: "Montgomery"}
 
 	if have != want {
-		t.Error(have, want)
+		t.Fatal(have, want)
 	}
 }
 
 func TestGetStationByAbbrFailLookup(t *testing.T) {
 	stationRepository := NewMemoryStationStorage()
 
-	have, err := stationRepository.GetStationByAbbr("")
+	t.Run("blank", func(t *testing.T) {
+		have, err := stationRepository.GetStationByAbbr("")
+		if err == nil {
+			t.Fatal(have, err)
+		}
+	})
 
-	if err == nil {
-		t.Error(have, err)
-	}
+	t.Run("noisy", func(t *testing.T) {
+		have, err := stationRepository.GetStationByAbbr("h4oih2ohgo4h2o4h2o4h")
+		if err == nil {
+			t.Fatal(have, err)
+		}
+	})
 }
