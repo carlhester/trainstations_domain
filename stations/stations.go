@@ -6,7 +6,7 @@ type Station struct {
 }
 
 type Repository interface {
-	GetAllStations() ([]Station, error)
 	Add(Station) error
-	GetStationByAbbr(string) (Station, error)
+	Get(string) (Station, error)
+	GetAll() ([]Station, error)
 }

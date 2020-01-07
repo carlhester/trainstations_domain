@@ -1,20 +1,24 @@
 package main
 
 import "fmt"
+
 import "trainstations_domain/stations"
 import "trainstations_domain/storage"
 
 func main() {
 
-	// Create a variable to serve domain functionality
-	var stationRepository stations.Repository
+	stationRepository := new(storage.MemoryStationStorage)
+	allStations, _ := stationRepository.GetAll()
+	fmt.Println(allStations)
 
-	// Set our repository to use the in-memory storage
-	stationRepository = storage.NewMemoryStationStorage()
+	stationRepository.Add(stations.Station{Abbr: "MONT", Name: "Montgomery"})
+	allStations, _ = stationRepository.GetAll()
+	fmt.Println(allStations)
 
-	// Use the GetAllStations functionality to populate stations
-	stations, _ := stationRepository.GetAllStations()
+	stationRepository.Add(stations.Station{Abbr: "NCON", Name: "North Concord"})
+	allStations, _ = stationRepository.GetAll()
+	fmt.Println(allStations)
 
-	// Print result
-	fmt.Println(stations)
+	mont, _ := stationRepository.Get("MONT")
+	fmt.Println(mont)
 }

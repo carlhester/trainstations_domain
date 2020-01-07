@@ -16,25 +16,22 @@ func NewMemoryStationStorage() *MemoryStationStorage {
 	return data
 }
 
-// GetAllStations returns a slice of all the Station structs
-func (m *MemoryStationStorage) GetAllStations() ([]stations.Station, error) {
-	return m.stations, nil
-}
-
 // Adds a new Station to to the slice of structs
 func (m *MemoryStationStorage) Add(station stations.Station) error {
 	m.stations = append(m.stations, station)
 	return nil
 }
 
-// Returns a single Station when passed a valid Station.Abbr
-func (m *MemoryStationStorage) GetStationByAbbr(abbr string) (stations.Station, error) {
-	stationInMemory := []stations.Station{{Abbr: "MONT", Name: "Montgomery"}}
-	for _, station := range stationInMemory {
+func (m *MemoryStationStorage) Get(abbr string) (stations.Station, error) {
+	for _, station := range m.stations {
 		if station.Abbr == abbr {
 			return station, nil
 		}
 	}
-	blankStation := stations.Station{}
-	return blankStation, errors.New("fail")
+	emptyStation := stations.Station{}
+	return emptyStation, errors.New("fail")
+}
+
+func (m *MemoryStationStorage) GetAll() ([]stations.Station, error) {
+	return m.stations, nil
 }
