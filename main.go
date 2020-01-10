@@ -2,7 +2,8 @@ package main
 
 import "fmt"
 
-//import "trainstations_domain/stations"
+import "trainstations_domain/stations"
+
 //import "trainstations_domain/storage/memory"
 import "trainstations_domain/storage/file"
 
@@ -25,8 +26,14 @@ func main() {
 	//	fmt.Println(mont)
 	//
 	// file
-	stationRepository := file.NewFileStationStorage()
-	fmt.Println(stationRepository)
+	storageFile := "test.txt"
+
+	stationRepository, fp := file.NewFileStationStorage(storageFile)
+	fmt.Println(stationRepository, fp)
+
+	start := stationRepository.Add(fp, stations.Station{Name: "Montgomery", Abbr: "MONT"})
+
+	fmt.Println(start)
 
 	//allStations, _ = stationRepository.GetAll()
 	//fmt.Println(allStations)
