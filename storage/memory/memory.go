@@ -9,7 +9,7 @@ type MemoryStationStorage struct {
 
 // This constructor exists because when we're storing in memory we want to
 // initialize our empty MemoryStationStorage with some data.
-func NewMemoryStationStorage() *MemoryStationStorage {
+func NewStationStorage() *MemoryStationStorage {
 	storage := stations.Station{Abbr: "MONT", Name: "Montgomery"}
 	data := new(MemoryStationStorage)
 	data.Add(storage)

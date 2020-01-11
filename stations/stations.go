@@ -1,8 +1,8 @@
 package stations
 
 type Station struct {
-	Abbr string
-	Name string
+	Abbr string `json:"Abbr"`
+	Name string `json:"Name"`
 }
 
 type Repository interface {
