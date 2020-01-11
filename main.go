@@ -28,10 +28,10 @@ func main() {
 	// file
 	storageFile := "test.txt"
 
-	stationRepository, fp := file.NewFileStationStorage(storageFile)
-	fmt.Println(stationRepository, fp)
+	stationRepository := file.NewFileStationStorage(storageFile)
+	fmt.Println(stationRepository)
 
-	start := stationRepository.Add(fp, stations.Station{Name: "Montgomery", Abbr: "MONT"})
+	start := stationRepository.Add(stations.Station{Name: "Montgomery", Abbr: "MONT"})
 
 	fmt.Println(start)
 

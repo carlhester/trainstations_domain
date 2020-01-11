@@ -8,23 +8,24 @@ import "trainstations_domain/stations"
 
 type FileStationStorage struct {
 	stations []stations.Station
+	file     *os.File
 }
 
-func NewFileStationStorage(file string) (*FileStationStorage, *os.File) {
+func NewFileStationStorage(file string) *FileStationStorage {
 	storage := new(FileStationStorage)
-
-	newFile, err := os.Create(file)
+	newFile, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(newFile)
-	return storage, newFile
+	storage.file = newFile
+	return storage
+
 }
 
-func (f *FileStationStorage) Add(fp *os.File, station stations.Station) error {
+func (f *FileStationStorage) Add(station stations.Station) error {
 	b, _ := json.Marshal(station)
 	bytes := []byte(string(b))
-	bytesWritten, err := fp.Write(bytes)
+	bytesWritten, err := f.file.Write(bytes)
 	if err != nil {
 		log.Fatal(err)
 	}
