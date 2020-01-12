@@ -3,9 +3,8 @@ package main
 import "fmt"
 
 import "trainstations_domain/stations"
-
-//import "trainstations_domain/storage/memory"
 import "trainstations_domain/storage/file"
+import web "trainstations_domain/server/web"
 
 func main() {
 
@@ -33,4 +32,7 @@ func main() {
 
 	allStations, _ := stationRepository.GetAll()
 	fmt.Println(allStations)
+
+	web.StartServer(":8080")
+
 }

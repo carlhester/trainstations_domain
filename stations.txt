@@ -46,4 +46,3 @@
 {"name":"Warm Springs/South Fremont","abbr":"WARM"},
 {"name":"West Dublin/Pleasanton","abbr":"WDUB"},
 {"name":"West Oakland","abbr":"WOAK"}]
-
