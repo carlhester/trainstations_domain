@@ -43,3 +43,13 @@ func (m *MemoryStationStorage) Get(abbr string) (stations.Station, error) {
 func (m *MemoryStationStorage) GetAll() ([]stations.Station, error) {
 	return m.stations, nil
 }
+
+func (m *MemoryStationStorage) GetByAbbr(abbr string) (stations.Station, error) {
+	for _, station := range m.stations {
+		if station.Abbr == abbr {
+			return station, nil
+		}
+	}
+	emptyStation := stations.Station{}
+	return emptyStation, errors.New("fail")
+}
