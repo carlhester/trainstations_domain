@@ -29,8 +29,7 @@ func main() {
 	storageFile := "test.txt"
 	stationRepository := file.NewStationStorage(storageFile)
 
-	//_ = stationRepository.Add(stations.Station{Name: "Montgomery", Abbr: "MONT"})
-	_ = stationRepository.Add(stations.Station{Name: "North Concord", Abbr: "NCON"})
+	_ = stationRepository.Add(stations.Station{Name: "Montgomery St.", Abbr: "MONT"})
 
 	allStations, _ := stationRepository.GetAll()
 	fmt.Println(allStations)

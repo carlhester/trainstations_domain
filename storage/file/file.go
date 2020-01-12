@@ -22,7 +22,7 @@ func NewStationStorage(file string) *FileStationStorage {
 	return storage
 }
 
-func (f *FileStationStorage) Add(station stations.Station) error {
+func (f *FileStationStorage) Add(submittedStation stations.Station) error {
 	//newStation, _ := json.Marshal(station)
 	oldStations, _ := f.GetAll()
 	var allStations []stations.Station
@@ -30,7 +30,14 @@ func (f *FileStationStorage) Add(station stations.Station) error {
 	for _, eachStation := range oldStations {
 		allStations = append(allStations, eachStation)
 	}
-	allStations = append(allStations, station)
+
+	for _, everyStation := range allStations {
+		if submittedStation == everyStation {
+			return nil
+		}
+	}
+
+	allStations = append(allStations, submittedStation)
 
 	d, _ := json.Marshal(allStations)
 
