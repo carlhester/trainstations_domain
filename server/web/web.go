@@ -27,9 +27,6 @@ func home(rw http.ResponseWriter, r *http.Request) {
 
 	storageFile := "test.txt"
 	stationRepository := file.NewStationStorage(storageFile)
-
-	_ = stationRepository.Add(stations.Station{Name: "Montgomery St.", Abbr: "MONT"})
-
 	allStations, _ := stationRepository.GetAll()
 
 	page := PageData{

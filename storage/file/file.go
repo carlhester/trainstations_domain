@@ -15,6 +15,7 @@ type FileStationStorage struct {
 func NewStationStorage(file string) *FileStationStorage {
 	storage := new(FileStationStorage)
 	newFile, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
+	defer newFile.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
