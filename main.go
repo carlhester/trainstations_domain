@@ -1,9 +1,8 @@
 package main
 
-import "fmt"
-
-import "trainstations_domain/stations"
-import "trainstations_domain/storage/file"
+//import "fmt"
+//import "trainstations_domain/stations"
+//import "trainstations_domain/storage/file"
 import web "trainstations_domain/server/web"
 
 func main() {
@@ -25,13 +24,13 @@ func main() {
 	//fmt.Println(mont)
 
 	// file
-	storageFile := "test.txt"
-	stationRepository := file.NewStationStorage(storageFile)
+	//storageFile := "test.txt"
+	//stationRepository := file.NewStationStorage(storageFile)
 
-	_ = stationRepository.Add(stations.Station{Name: "Montgomery St.", Abbr: "MONT"})
+	//_ = stationRepository.Add(stations.Station{Name: "Montgomery St.", Abbr: "MONT"})
 
-	allStations, _ := stationRepository.GetAll()
-	fmt.Println(allStations)
+	//allStations, _ := stationRepository.GetAll()
+	//fmt.Println(allStations)
 
 	web.StartServer(":8080")
 
