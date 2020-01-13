@@ -30,26 +30,16 @@ func (m *MemoryStationStorage) Add(station stations.Station) error {
 
 // Returns a Station when provided with an existing Abbr
 // Otherwise returns an empty Station and error
-func (m *MemoryStationStorage) Get(abbr string) (stations.Station, error) {
+func (m *MemoryStationStorage) Get(abbr string) ([]stations.Station, error) {
 	for _, station := range m.stations {
 		if station.Abbr == abbr {
-			return station, nil
+			selected := []stations.Station{station}
+			return selected, nil
 		}
 	}
-	emptyStation := stations.Station{}
-	return emptyStation, errors.New("fail")
+	return m.stations, nil
 }
 
 func (m *MemoryStationStorage) GetAll() ([]stations.Station, error) {
 	return m.stations, nil
-}
-
-func (m *MemoryStationStorage) GetByAbbr(abbr string) (stations.Station, error) {
-	for _, station := range m.stations {
-		if station.Abbr == abbr {
-			return station, nil
-		}
-	}
-	emptyStation := stations.Station{}
-	return emptyStation, errors.New("fail")
 }
