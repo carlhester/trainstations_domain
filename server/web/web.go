@@ -20,17 +20,17 @@ func StartServer(port string) {
 }
 
 func home(rw http.ResponseWriter, r *http.Request) {
+	stationRepository := file.NewStationStorage("test.txt")
+
+	abbr := r.URL.Query().Get("abbr")
+
+	//stationData, _ := stationRepository.GetAll()
+	stationData, _ := stationRepository.Get(abbr)
+	page := PageData{Stations: stationData}
+
 	tmpl, err := template.ParseFiles("./ui/html/index.html")
 	if err != nil {
 		log.Panic("Error occurred parsing template", err)
-	}
-
-	storageFile := "test.txt"
-	stationRepository := file.NewStationStorage(storageFile)
-	allStations, _ := stationRepository.GetAll()
-
-	page := PageData{
-		Stations: allStations,
 	}
 
 	err = tmpl.Execute(rw, page)

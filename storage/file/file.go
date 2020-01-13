@@ -4,6 +4,7 @@ import "encoding/json"
 import "os"
 import "log"
 import "io/ioutil"
+import "strings"
 
 import "trainstations_domain/stations"
 
@@ -61,6 +62,30 @@ func (f *FileStationStorage) GetAll() ([]stations.Station, error) {
 	err = json.Unmarshal(bytes, &data)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	return data, nil
+}
+
+func (f *FileStationStorage) Get(abbr string) ([]stations.Station, error) {
+	jsonFile, err := os.Open(f.File.Name())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer jsonFile.Close()
+	bytes, _ := ioutil.ReadAll(jsonFile)
+
+	var data []stations.Station
+	err = json.Unmarshal(bytes, &data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, station := range data {
+		if strings.ToLower(station.Abbr) == strings.ToLower(abbr) {
+			selected := []stations.Station{station}
+			return selected, nil
+		}
 	}
 
 	return data, nil
