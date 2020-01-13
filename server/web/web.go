@@ -8,7 +8,8 @@ import "trainstations_domain/stations"
 import "trainstations_domain/storage/file"
 
 type PageData struct {
-	Stations []stations.Station
+	SelectedStations []stations.Station
+	AllStations      []stations.Station
 }
 
 func StartServer(port string) {
@@ -24,9 +25,12 @@ func home(rw http.ResponseWriter, r *http.Request) {
 
 	abbr := r.URL.Query().Get("abbr")
 
-	//stationData, _ := stationRepository.GetAll()
+	allStationsData, _ := stationRepository.GetAll()
 	stationData, _ := stationRepository.Get(abbr)
-	page := PageData{Stations: stationData}
+
+	page := PageData{
+		SelectedStations: stationData,
+		AllStations:      allStationsData}
 
 	tmpl, err := template.ParseFiles("./ui/html/index.html")
 	if err != nil {

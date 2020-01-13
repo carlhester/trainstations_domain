@@ -12,6 +12,20 @@
         <div class="row">
             <h1>Trains</h1>
         </div>
+            <div class="row">
+            <form action="/" method="get">
+             <div class="form-group">
+                <label for="exampleFormControlSelect1">Station select</label>
+                <select class="form-control" id="abbr" name="abbr" >
+                    <option value="" selected disabled>Select Station</option>
+                    {{ range .AllStations }} 
+                  <option>{{ .Abbr }}</option>
+                    {{ end }} 
+                </select>
+              </div>
+              <input type="submit">
+            </form>
+            </div>
         <div class="row">
             <table class="table table-bordered" id="stations">
                 <thead>
@@ -21,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{ range .Stations }}
+                    {{ range .SelectedStations }}
                     <tr>
                         <td>{{ .Abbr }}</td>
                         <td>{{ .Name }}</td>
@@ -37,7 +51,10 @@
     <script>
         $(document).ready(function()
         {
-            $('#stations').DataTable()
+            $('#stations').DataTable(
+                "pageLength" : 50
+            )
+        
         });
     </script>
 </body>
