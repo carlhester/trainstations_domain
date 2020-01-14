@@ -30,15 +30,17 @@
             <table class="table table-bordered" id="stations">
                 <thead>
                     <tr>
-                        <th>Abbr</th>
-                        <th>Name</th>
+                        <th>Dest</th>
+                        <th>Minutes</th>
+                        <th>Line</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{ range .SelectedStations }}
                     <tr>
-                        <td>{{ .Abbr }}</td>
-                        <td>{{ .Name }}</td>
+                        <td>{{ .Dest }}</td>
+                        <td>{{ .Minutes }}</td>
+                        <td>{{ .Line }}</td>
                     </tr>
                     {{ end }}
                 </tbody>

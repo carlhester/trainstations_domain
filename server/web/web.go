@@ -3,12 +3,12 @@ package webserver
 import "log"
 import "net/http"
 import "html/template"
-
 import "trainstations_domain/stations"
 import "trainstations_domain/storage/file"
+import "trainstations_domain/storage/bartapi"
 
 type PageData struct {
-	SelectedStations []stations.Station
+	SelectedStations []bartapi.TrainInfo
 	AllStations      []stations.Station
 }
 
@@ -25,8 +25,10 @@ func home(rw http.ResponseWriter, r *http.Request) {
 
 	abbr := r.URL.Query().Get("abbr")
 
+	bartdata := bartapi.TrainsFromBartAPI(abbr, "n")
+
 	allStationsData, _ := stationRepository.GetAll()
-	stationData, _ := stationRepository.Get(abbr)
+	stationData := bartdata
 
 	page := PageData{
 		SelectedStations: stationData,
