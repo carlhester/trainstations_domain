@@ -1,6 +1,6 @@
 package webserver
 
-import "fmt"
+//import "fmt"
 import "log"
 import "net/http"
 import "html/template"
@@ -32,12 +32,14 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	abbr := r.URL.Query().Get("abbr")
 	line := r.URL.Query().Get("line")
 
-	fmt.Println(line)
-
 	stationData := bartapi.TrainsFromBartAPI(abbr, "n")
 
+	//fmt.Println(line)
+	filteredTrains := filterDestinationByLine(stationData, line)
+
 	page := PageData{
-		SelectedStations: stationData,
+		//SelectedStations: stationData,
+		SelectedStations: filteredTrains,
 		AllStations:      allStations,
 		AllLines:         allLines,
 	}
@@ -51,4 +53,14 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Panic("Error occurred writing template", err)
 	}
+}
+
+func filterDestinationByLine(trainsToFilter []trains.TrainInfo, line string) []trains.TrainInfo {
+	var trainsMatchLine []trains.TrainInfo
+	for _, train := range trainsToFilter {
+		if train.Line == line {
+			trainsMatchLine = append(trainsMatchLine, train)
+		}
+	}
+	return trainsMatchLine
 }
