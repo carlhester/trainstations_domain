@@ -1,0 +1,6 @@
+[{"color":"RED"},
+{"color":"YELLOW"},
+{"color":"GREEN"},
+{"color":"BLUE"},
+{"color":"ORANGE"},]
+

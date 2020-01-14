@@ -22,6 +22,12 @@
                   <option>{{ .Abbr }}</option>
                     {{ end }} 
                 </select>
+                <select class="form-control" id="line" name="line" >
+                    <option value="" selected disabled>Select Line</option>
+                    {{ range .AllLines }} 
+                  <option>{{ .Color }}</option>
+                    {{ end }} 
+                </select>
               </div>
               <input type="submit">
             </form>
