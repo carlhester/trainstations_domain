@@ -22,14 +22,16 @@
                   <option>{{ .Abbr }}</option>
                     {{ end }} 
                 </select>
-                <select class="form-control" id="line" name="line" >
-                    <option value="" selected disabled>Select Line</option>
+                </div>
+                <div>
                     {{ range .AllLines }} 
-                  <option>{{ .Color }}</option>
+                <input type="radio" id="line" name="line" value="{{ .Color }}">
+                <label for="contactChoice1">{{ .Color }}</label>
                     {{ end }} 
-                </select>
               </div>
+              <div>
               <input type="submit">
+              </div>
             </form>
             </div>
         <div class="row">
