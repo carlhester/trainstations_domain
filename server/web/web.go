@@ -21,18 +21,15 @@ func StartServer(port string) {
 }
 
 func home(rw http.ResponseWriter, r *http.Request) {
-	stationRepository := file.NewStationStorage("test.txt")
+	stationRepository := file.NewStationStorage("stations.txt")
+	allStations, _ := stationRepository.GetAll()
 
 	abbr := r.URL.Query().Get("abbr")
-
-	bartdata := bartapi.TrainsFromBartAPI(abbr, "n")
-
-	allStationsData, _ := stationRepository.GetAll()
-	stationData := bartdata
+	stationData := bartapi.TrainsFromBartAPI(abbr, "n")
 
 	page := PageData{
 		SelectedStations: stationData,
-		AllStations:      allStationsData}
+		AllStations:      allStations}
 
 	tmpl, err := template.ParseFiles("./ui/html/index.html")
 	if err != nil {
