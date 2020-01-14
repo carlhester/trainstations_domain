@@ -6,11 +6,12 @@ import "net/http"
 import "html/template"
 import "trainstations_domain/stations"
 import "trainstations_domain/lines"
+import "trainstations_domain/trains"
 import "trainstations_domain/storage/file"
 import "trainstations_domain/storage/bartapi"
 
 type PageData struct {
-	SelectedStations []bartapi.TrainInfo
+	SelectedStations []trains.TrainInfo
 	AllStations      []stations.Station
 	AllLines         []lines.Line
 }

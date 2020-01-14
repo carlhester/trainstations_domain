@@ -7,8 +7,9 @@ import "net/url"
 import "net/http"
 import "io/ioutil"
 import "encoding/json"
+import "trainstations_domain/trains"
 
-func TrainsFromBartAPI(station string, dir string) []TrainInfo {
+func TrainsFromBartAPI(station string, dir string) []trains.TrainInfo {
 	if station == "" || dir == "" {
 		return nil
 	}
@@ -34,12 +35,12 @@ func TrainsFromBartAPI(station string, dir string) []TrainInfo {
 	}
 
 	trainData := rawAPIDataIntoTrains(rawdata)
-	var targetTrains []TrainInfo
+	var targetTrains []trains.TrainInfo
 
 	for _, station := range trainData.Root.Station {
 		for _, train := range station.Etd {
 			for _, estimate := range train.Est {
-				thisTrain := TrainInfo{
+				thisTrain := trains.TrainInfo{
 					Dest:    train.Destination,
 					Minutes: convertMinutesToInt(estimate.Minutes),
 					Line:    estimate.Color,
@@ -59,7 +60,7 @@ func rawAPIDataIntoTrains(raw []byte) *RawTrainData {
 	return &trainData
 }
 
-func sortTrainsByMinutes(targets []TrainInfo) []TrainInfo {
+func sortTrainsByMinutes(targets []trains.TrainInfo) []trains.TrainInfo {
 	sort.Slice(targets, func(i, j int) bool { return targets[i].Minutes < targets[j].Minutes })
 	return targets
 }
