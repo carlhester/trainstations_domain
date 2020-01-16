@@ -2,5 +2,5 @@
 {"color":"YELLOW"},
 {"color":"GREEN"},
 {"color":"BLUE"},
-{"color":"ORANGE"},]
+{"color":"ORANGE"}]
 

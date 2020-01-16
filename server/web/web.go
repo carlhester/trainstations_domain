@@ -27,18 +27,18 @@ func StartServer(port string) {
 func home(rw http.ResponseWriter, r *http.Request) {
 	stationRepository := file.NewStationStorage("./data/stations.txt")
 	allStations, _ := stationRepository.GetAll()
-	allLines, _ := lines.GetAllLines()
+
+	lineRepository := file.NewLineStorage("./data/lines.txt")
+	allLines, _ := lineRepository.GetAll()
 
 	abbr := r.URL.Query().Get("abbr")
 	line := r.URL.Query().Get("line")
 
 	stationData := bartapi.TrainsFromBartAPI(abbr, "n")
 
-	//fmt.Println(line)
 	filteredTrains := filterDestinationByLine(stationData, line)
 
 	page := PageData{
-		//SelectedStations: stationData,
 		SelectedStations: filteredTrains,
 		AllStations:      allStations,
 		AllLines:         allLines,

@@ -7,10 +7,27 @@ import "io/ioutil"
 import "strings"
 
 import "trainstations_domain/stations"
+import "trainstations_domain/lines"
 
 type FileStationStorage struct {
 	Stations []stations.Station `json:"Stations"`
 	File     *os.File
+}
+
+type FileLineStorage struct {
+	Lines []lines.Line `json:"Line"`
+	File  *os.File
+}
+
+func NewLineStorage(file string) *FileLineStorage {
+	storage := new(FileLineStorage)
+	newFile, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
+	defer newFile.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	storage.File = newFile
+	return storage
 }
 
 func NewStationStorage(file string) *FileStationStorage {
@@ -24,30 +41,21 @@ func NewStationStorage(file string) *FileStationStorage {
 	return storage
 }
 
-func (f *FileStationStorage) Add(submittedStation stations.Station) error {
-	//newStation, _ := json.Marshal(station)
-	oldStations, _ := f.GetAll()
-	var allStations []stations.Station
-
-	for _, eachStation := range oldStations {
-		allStations = append(allStations, eachStation)
-	}
-
-	for _, everyStation := range allStations {
-		if submittedStation == everyStation {
-			return nil
-		}
-	}
-
-	allStations = append(allStations, submittedStation)
-
-	d, _ := json.Marshal(allStations)
-
-	err := ioutil.WriteFile(f.File.Name(), d, 0644)
+func (f *FileLineStorage) GetAll() ([]lines.Line, error) {
+	jsonFile, err := os.Open(f.File.Name())
 	if err != nil {
 		log.Fatal(err)
 	}
-	return nil
+	defer jsonFile.Close()
+	bytes, _ := ioutil.ReadAll(jsonFile)
+
+	var data []lines.Line
+	err = json.Unmarshal(bytes, &data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return data, nil
 }
 
 func (f *FileStationStorage) GetAll() ([]stations.Station, error) {
