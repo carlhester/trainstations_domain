@@ -7,6 +7,7 @@ import "html/template"
 import "trainstations_domain/stations"
 import "trainstations_domain/lines"
 import "trainstations_domain/trains"
+import "trainstations_domain/scoring"
 import "trainstations_domain/storage/file"
 import "trainstations_domain/storage/bartapi"
 
@@ -37,9 +38,11 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	stationData := bartapi.TrainsFromBartAPI(abbr, "n")
 
 	filteredTrains := filterDestinationByLine(stationData, line)
+	scoredTrains := scoring.Score(filteredTrains)
 
 	page := PageData{
-		SelectedStations: filteredTrains,
+		//SelectedStations: filteredTrains,
+		SelectedStations: scoredTrains,
 		AllStations:      allStations,
 		AllLines:         allLines,
 	}
