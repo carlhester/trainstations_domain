@@ -32,12 +32,13 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	lineRepository := file.NewLineStorage("./data/lines.txt")
 	allLines, _ := lineRepository.GetAll()
 
+	_ = r.ParseForm()
 	abbr := r.URL.Query().Get("abbr")
-	line := r.URL.Query().Get("line")
+	lines := r.Form["line"]
 
 	stationData := bartapi.TrainsFromBartAPI(abbr, "n")
 
-	filteredTrains := filterDestinationByLine(stationData, line)
+	filteredTrains := filterDestinationByLine(stationData, lines)
 	scoredTrains := scoring.Score(filteredTrains)
 
 	page := PageData{
@@ -58,11 +59,13 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func filterDestinationByLine(trainsToFilter []trains.TrainInfo, line string) []trains.TrainInfo {
+func filterDestinationByLine(trainsToFilter []trains.TrainInfo, lines []string) []trains.TrainInfo {
 	var trainsMatchLine []trains.TrainInfo
 	for _, train := range trainsToFilter {
-		if train.Line == line {
-			trainsMatchLine = append(trainsMatchLine, train)
+		for _, line := range lines {
+			if train.Line == line {
+				trainsMatchLine = append(trainsMatchLine, train)
+			}
 		}
 	}
 	return trainsMatchLine

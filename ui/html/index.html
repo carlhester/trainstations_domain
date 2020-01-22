@@ -25,8 +25,8 @@
                 </div>
                 <div>
                     {{ range .AllLines }} 
-                <input type="radio" id="line" name="line" value="{{ .Color }}">
-                <label for="contactChoice1">{{ .Color }}</label>
+                <input type="checkbox" name="line" value="{{ .Color }}">
+                <label for="line">{{ .Color }}</label>
                     {{ end }} 
               </div>
               <div>
@@ -38,7 +38,7 @@
             <table class="table table-bordered" id="stations">
                 <thead>
                     <tr>
-                        <th>Dest</th>
+                        <th>Destination</th>
                         <th>Minutes</th>
                         <th>Line</th>
                         <th>Points</th>
