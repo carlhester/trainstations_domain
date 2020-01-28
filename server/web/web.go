@@ -42,7 +42,6 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	scoredTrains := scoring.Score(filteredTrains)
 
 	page := PageData{
-		//SelectedStations: filteredTrains,
 		SelectedStations: scoredTrains,
 		AllStations:      allStations,
 		AllLines:         allLines,
@@ -73,6 +72,9 @@ func filterDestinationByLine(trainsToFilter []trains.TrainInfo, lines []string) 
 				trainsMatchLine = append(trainsMatchLine, train)
 			}
 		}
+	}
+	if len(trainsMatchLine) == 0 {
+		return trainsToFilter
 	}
 	return trainsMatchLine
 }
