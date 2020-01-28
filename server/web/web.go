@@ -48,7 +48,9 @@ func home(rw http.ResponseWriter, r *http.Request) {
 		AllLines:         allLines,
 	}
 
-	tmpl, err := template.ParseFiles("./ui/html/index.html")
+	templates := []string{"./ui/html/index.html", "./ui/html/templates/base.tmpl"}
+
+	tmpl, err := template.ParseFiles(templates...)
 	if err != nil {
 		log.Panic("Error occurred parsing template", err)
 	}

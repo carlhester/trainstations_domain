@@ -1,0 +1,80 @@
+{{define "base"}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link rel="stylesheet" href="http://d2fq26gzgmfal8.cloudfront.net/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Trains</h1>
+        </div>
+        <div class="row">
+            <form class="form-inline" action="/" method="get">
+            <div class="form-group">
+                <label for="abbr">Station select</label>
+                <select class="form-control" id="abbr" name="abbr" >
+                    <option value="" selected disabled>Select Station</option>
+                    {{ range .AllStations }} 
+                    <option>{{ .Abbr }}</option>
+                    {{ end }} 
+                </select>
+                </div>
+                <div class="checkbox">
+                    {{ range .AllLines }} 
+                    <label>
+                        <input type="checkbox" name="line" value="{{ .Color }}">
+                        {{ .Color }}
+                    </label>
+                    {{ end }} 
+                </div>
+                <div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+            <hr class="mb-4">
+            </form>
+        </div>
+        <div class="row">
+            <table class="table table-bordered" id="stations">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Minutes</th>
+                        <th>Line</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .SelectedStations }}
+                    <tr>
+                        <td>{{ .Dest }}</td>
+                        <td>{{ .Minutes }}</td>
+                        <td>{{ .Line }}</td>
+                        <td>{{ .Points }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="http://d2fq26gzgmfal8.cloudfront.net/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
+    <script src="http://d2fq26gzgmfal8.cloudfront.net/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $('#stations').DataTable(
+                "pageLength" : 50
+            )
+        
+        });
+    </script>
+</body>
+</html>
+{{end}}
