@@ -2,6 +2,7 @@ package webserver
 
 //import "fmt"
 import "log"
+import "path"
 import "net/http"
 import "html/template"
 import "trainstations_domain/stations"
@@ -33,7 +34,7 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	allLines, _ := lineRepository.GetAll()
 
 	_ = r.ParseForm()
-	abbr := r.URL.Query().Get("abbr")
+	abbr := path.Base(r.URL.String())
 	lines := r.Form["line"]
 
 	stationData := bartapi.TrainsFromBartAPI(abbr, "n")

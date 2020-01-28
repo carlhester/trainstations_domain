@@ -18,15 +18,6 @@
         {{template "header" .}}
         <div class="row">
             <form class="form-inline" action="/" method="get">
-            <div class="form-group">
-                <label for="abbr">Station select</label>
-                <select class="form-control" id="abbr" name="abbr" >
-                    <option value="" selected disabled>Select Station</option>
-                    {{ range .AllStations }} 
-                    <option>{{ .Abbr }}</option>
-                    {{ end }} 
-                </select>
-                </div>
                 <div class="checkbox">
                     {{ range .AllLines }} 
                     <label>
