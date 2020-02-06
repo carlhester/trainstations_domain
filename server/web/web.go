@@ -12,9 +12,10 @@ import "trainstations_domain/storage/file"
 import "trainstations_domain/storage/bartapi"
 
 type PageData struct {
-	SelectedStations []trains.TrainInfo
-	AllStations      []stations.Station
-	AllLines         []lines.Line
+	SelectedStationsNorth []trains.TrainInfo
+	SelectedStationsSouth []trains.TrainInfo
+	AllStations           []stations.Station
+	AllLines              []lines.Line
 }
 
 func StartServer(port string) {
@@ -36,15 +37,19 @@ func home(rw http.ResponseWriter, r *http.Request) {
 	abbr := r.URL.Query().Get("abbr")
 	lines := r.Form["line"]
 
-	stationData := bartapi.TrainsFromBartAPI(abbr, "n")
+	stationDataNorth := bartapi.TrainsFromBartAPI(abbr, "n")
+	filteredTrainsNorth := filterDestinationByLine(stationDataNorth, lines)
+	scoredTrainsNorth := scoring.Score(filteredTrainsNorth)
 
-	filteredTrains := filterDestinationByLine(stationData, lines)
-	scoredTrains := scoring.Score(filteredTrains)
+	stationDataSouth := bartapi.TrainsFromBartAPI(abbr, "s")
+	filteredTrainsSouth := filterDestinationByLine(stationDataSouth, lines)
+	scoredTrainsSouth := scoring.Score(filteredTrainsSouth)
 
 	page := PageData{
-		SelectedStations: scoredTrains,
-		AllStations:      allStations,
-		AllLines:         allLines,
+		SelectedStationsNorth: scoredTrainsNorth,
+		SelectedStationsSouth: scoredTrainsSouth,
+		AllStations:           allStations,
+		AllLines:              allLines,
 	}
 
 	templates := []string{

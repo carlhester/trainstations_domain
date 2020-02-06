@@ -52,7 +52,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{ range .SelectedStations }}
+                    {{ range .SelectedStationsNorth }}
+                    <tr>
+                        <td>{{ .Dest }}</td>
+                        <td>{{ .Minutes }}</td>
+                        <td>{{ .Line }}</td>
+                        <td>{{ .Points }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <table class="table table-bordered" id="stations">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Minutes</th>
+                        <th>Line</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .SelectedStationsSouth }}
                     <tr>
                         <td>{{ .Dest }}</td>
                         <td>{{ .Minutes }}</td>
